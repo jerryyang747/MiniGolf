@@ -69,7 +69,7 @@ void Delay100ms(uint32_t count); // time delay in 0.1 seconds
 // *************************** Capture image dimensions out of BMP**********
 void displayStart(void);
 
-int main(void){
+int main1(void){
   TExaS_Init();  // set system clock to 80 MHz
   Random_Init(1);
 	ST7735_InitR(INITR_REDTAB);
@@ -79,14 +79,6 @@ int main(void){
 	displayStart(); //Start Screen
 
   ST7735_FillScreen(0x0000);            // set screen to black
-  ST7735_SetCursor(1, 1);
-  ST7735_OutString("GAME OVER");
-  ST7735_SetCursor(1, 2);
-  ST7735_OutString("Nice try,");
-  ST7735_SetCursor(1, 3);
-  ST7735_OutString("Earthling!");
-  ST7735_SetCursor(2, 4);
-  LCD_OutDec(1234);
   while(1){
 		
   }
