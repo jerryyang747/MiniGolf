@@ -967,14 +967,12 @@ void ST7735_DrawBitmap(int16_t x, int16_t y, const uint16_t *image, int16_t w, i
 
   for(y=0; y<h; y=y+1){
     for(x=0; x<w; x=x+1){
-			                                        // send the top 8 bits, ignoring black bits from background
+                                        // send the top 8 bits
       writedata((uint8_t)(image[i] >> 8));
                                         // send the bottom 8 bits
       writedata((uint8_t)image[i]);
-			
       i = i + 1;                        // go to the next pixel
-    
-	}
+    }
     i = i + skipC;
     i = i - 2*originalWidth;
   }
