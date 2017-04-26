@@ -18,7 +18,7 @@ void ADC_Init(void){ volatile unsigned long delay = 0;
 	delay++; delay++; 	delay++; delay++;delay++; delay++;						//Delay to stabilize
 	ADC1_PC_R =0x01;								//configure for 125K, SYSCTL_RCGCADC_R
 	ADC1_ACTSS_R &= ~0x0008;        //disable sample sequencer 3
-	ADC1_SAC_R = 6;									//Slow down fluctuations
+	//ADC1_SAC_R = 6;									//Slow down fluctuations
   ADC1_SSPRI_R = 0x0123;          //Sequencer 3 is highest priority
   ADC1_EMUX_R &= ~0xF000;         //seq3 is software trigger
   ADC1_SSMUX3_R &= ~0x000F;       //clear SS3 field

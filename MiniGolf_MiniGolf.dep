@@ -4,7 +4,7 @@ F (.\random.s)(0x5900569A)(--cpu Cortex-M4 -g --apcs=interwork -I C:\Keil\ARM\
 F (.\DAC.c)(0x5900BC8B)(-c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\.. --C99-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary-Drvmdk -DPART_LM4F120H5QR-o .\dac.o --omf_browse .\dac.crf --depend .\dac.d)
 I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x51C88A34)
 I (tm4c123gh6pm.h)(0x58FD9D38)
-F (.\ADC.c)(0x5900BA31)(-c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\.. --C99-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary-Drvmdk -DPART_LM4F120H5QR-o .\adc.o --omf_browse .\adc.crf --depend .\adc.d)
+F (.\ADC.c)(0x59012DE8)(-c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\.. --C99-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary-Drvmdk -DPART_LM4F120H5QR-o .\adc.o --omf_browse .\adc.crf --depend .\adc.d)
 I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x51C88A34)
 I (ADC.h)(0x59005C3B)
 I (tm4c123gh6pm.h)(0x58FD9D38)
@@ -27,7 +27,7 @@ I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x51C88A34)
 I (ST7735.h)(0x58FD9D37)
 I (tm4c123gh6pm.h)(0x58FD9D38)
 F (.\tm4c123gh6pm.h)(0x58FD9D38)()
-F (.\EdgeInterrupt.c)(0x5900C229)(-c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\.. --C99-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary-Drvmdk -DPART_LM4F120H5QR-o .\edgeinterrupt.o --omf_browse .\edgeinterrupt.crf --depend .\edgeinterrupt.d)
+F (.\EdgeInterrupt.c)(0x59012E06)(-c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\.. --C99-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary-Drvmdk -DPART_LM4F120H5QR-o .\edgeinterrupt.o --omf_browse .\edgeinterrupt.crf --depend .\edgeinterrupt.d)
 I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x51C88A34)
 I (tm4c123gh6pm.h)(0x58FD9D38)
 I (EdgeInterrupt.h)(0x5900C229)

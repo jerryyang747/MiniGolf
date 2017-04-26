@@ -71,8 +71,8 @@ void GPIOPortD_Handler(void){
   GPIO_PORTD_ICR_R |= 0x07;      // acknowledge flag4
 	int buttons = GPIO_PORTD_DATA_R;
 	//Do something based on button press
-	switch(buttons){
+	/*switch(buttons){
 		case 1: button = 0x01; break;
-	}
+	}*/
 }
 
