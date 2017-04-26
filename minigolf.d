@@ -5,3 +5,6 @@
 .\minigolf.o: Random.h
 .\minigolf.o: TExaS.h
 .\minigolf.o: ADC.h
+.\minigolf.o: Sound.h
+.\minigolf.o: Sensor.h
+.\minigolf.o: EdgeInterrupt.h

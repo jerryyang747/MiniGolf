@@ -1,2 +1,3 @@
-void EdgeCounter_Init(void);
+
+void Buttons_Init(void);
 int getNumEdges(void);

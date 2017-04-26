@@ -55,7 +55,9 @@
 #include "Random.h"
 #include "TExaS.h"
 #include "ADC.h"
-
+#include "Sound.h"
+#include "Sensor.h"
+#include "EdgeInterrupt.h"
 
 void DisableInterrupts(void); // Disable interrupts
 void EnableInterrupts(void);  // Enable interrupts
@@ -69,18 +71,27 @@ void Delay100ms(uint32_t count); // time delay in 0.1 seconds
 // *************************** Capture image dimensions out of BMP**********
 void displayStart(void);
 
-int main1(void){
+int main(void){
+	SYSCTL_RCGCGPIO_R |= 0x2F;
+	while(SYSCTL_PRGPIO_R==0){}
+	DisableInterrupts();
   TExaS_Init();  // set system clock to 80 MHz
   Random_Init(1);
 	ST7735_InitR(INITR_REDTAB);
   Output_Init();
+	ADC_Init();
+	Sound_Init();
+	Buttons_Init();
+	Sensor_Init();
+	EnableInterrupts();
+	
   ST7735_FillScreen(0x0000);            // set screen to black
 	
 	displayStart(); //Start Screen
 
   ST7735_FillScreen(0x0000);            // set screen to black
   while(1){
-		
+		ST7735_OutString(" Initialization Successful " );
   }
 }
 
