@@ -18,7 +18,7 @@
 // Input: none
 // Output: none
 void DAC_Init(void){ volatile unsigned int delay=0;
-	SYSCTL_RCGC2_R |= 0x02;
+	SYSCTL_RCGCGPIO_R |= 0x02;
 	delay++; delay++;
 	GPIO_PORTB_DIR_R = 0x3F;
 	GPIO_PORTB_AFSEL_R =0x00;

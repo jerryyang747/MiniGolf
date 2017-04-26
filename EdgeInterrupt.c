@@ -43,6 +43,9 @@ void WaitForInterrupt(void);  // low power mode
 // global variable visible in Watch window of debugger
 // increments at least once per button press
 volatile uint32_t FallingEdges = 0;
+int hit = 0;
+int help = 0;
+
 
 void Buttons_Init(void){                          
   SYSCTL_RCGCGPIO_R |= 0x00000008; // (a) activate clock for port D
@@ -69,7 +72,7 @@ void GPIOPortD_Handler(void){
 	int buttons = GPIO_PORTD_DATA_R;
 	//Do something based on button press
 	switch(buttons){
-		case 1: break;
+		case 1: button = 0x01; break;
 	}
 }
 

@@ -72,8 +72,7 @@ void Delay100ms(uint32_t count); // time delay in 0.1 seconds
 void displayStart(void);
 
 int main(void){
-	SYSCTL_RCGCGPIO_R |= 0x2F;
-	while(SYSCTL_PRGPIO_R==0){}
+	
 	DisableInterrupts();
   TExaS_Init();  // set system clock to 80 MHz
   Random_Init(1);

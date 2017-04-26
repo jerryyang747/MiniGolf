@@ -4,7 +4,7 @@
 <h1>µVision Build Log</h1>
 <h2>Project:</h2>
 C:\Users\Jerry Yang\OneDrive\College\Spring 2017\EE 319K\EE319Kware\MiniGolf\MiniGolf.uvproj
-Project File Date:  04/25/2017
+Project File Date:  04/26/2017
 
 <h2>Output:</h2>
 Rebuild target 'MiniGolf'
@@ -19,6 +19,9 @@ assembling LCD.s...
 assembling Print.s...
 compiling ST7735.c...
 compiling EdgeInterrupt.c...
+EdgeInterrupt.c(75): error:  #20: identifier "button" is undefined
+                case 1: button = 0x01; break;
+EdgeInterrupt.c: 0 warnings, 1 error
 compiling MiniGolf.c...
 Sensor.h(3): warning:  #1-D: last line of file ends without a newline
   void screenSaver(void);
@@ -30,27 +33,5 @@ Sensor.h(3): warning:  #1-D: last line of file ends without a newline
 Sensor.c(11): warning:  #177-D: variable "time" was declared but never referenced
         int time = 0;
 Sensor.c: 2 warnings, 0 errors
-linking...
-Program Size: Code=5072 RO-data=2292 RW-data=108 ZI-data=1180  
-".\MiniGolf.axf" - 0 Error(s), 3 Warning(s).
-</pre>
-</body>
-</html>
-inished: 1 information, 0 warning and 1 error messages.
 ".\MiniGolf.axf" - 1 Error(s), 3 Warning(s).
-Target not created
-ot created
-();
-DistSensor.c(11): warning:  #177-D: variable "time" was declared but never referenced
-        int time = 0;
-DistSensor.c: 4 warnings, 0 errors
-linking...
-.\MiniGolf.axf: Error: L6218E: Undefined symbol Sensor_Init (referred from minigolf.o).
-Not enough information to list image symbols.
-Finished: 1 information, 0 warning and 1 error messages.
-".\MiniGolf.axf" - 1 Error(s), 7 Warning(s).
-Target not created
- created
-formation, 0 warning and 3 error messages.
-".\MiniGolf.axf" - 3 Error(s), 6 Warning(s).
 Target not created
