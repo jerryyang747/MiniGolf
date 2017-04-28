@@ -42,14 +42,15 @@ void WaitForInterrupt(void);  // low power mode
 
 // global variable visible in Watch window of debugger
 // increments at least once per button press
-volatile uint32_t FallingEdges = 0;
-int hit = 0;
-int help = 0;
+int flag = 0;
+int PD0 = 0;
+int PD1 = 0;
+int PD2 = 0;
 
 
 void Buttons_Init(void){                          
   SYSCTL_RCGCGPIO_R |= 0x00000008; // (a) activate clock for port D
-  FallingEdges = 0;             // (b) initialize counter
+	while((SYSCTL_PRGPIO_R&0x8) == 0){}// (b) initialize counter
   GPIO_PORTD_DIR_R &= ~0x07;    // (c) make PF4 in (built-in button)
   GPIO_PORTD_AFSEL_R &= ~0x7;  //     disable alt funct on PF4 
 	GPIO_PORTD_AMSEL_R = 0;       //     disable analog functionality on PF
@@ -64,15 +65,23 @@ void Buttons_Init(void){
 	GPIO_PORTD_IM_R |= 0x07;
 	GPIO_PORTD_DEN_R |= 0x07;     //     enable digital I/O on PF4  
 }
-int getNumEdges(){
-	return FallingEdges;
-}
+
 void GPIOPortD_Handler(void){
+	if (flag==1) return; //check bounce flag
   GPIO_PORTD_ICR_R |= 0x07;      // acknowledge flag4
-	int buttons = GPIO_PORTD_DATA_R;
+	int buttons = GPIO_PORTD_DATA_R&0x00000007; // get button data
+	
 	//Do something based on button press
-	/*switch(buttons){
-		case 1: button = 0x01; break;
-	}*/
+	switch(buttons){
+		case 1: PD0 = 1; break;
+		case 2: PD1 = 1; break;
+		case 4: PD2 = 1; break;
+		
+		case 3: PD0 = 1;PD1=1;break;
+		case 5: PD0=1;PD2=1;break;
+		case 6: PD1=1;PD2=1;break;
+		case 7: PD0=1;PD2=1;PD1=1;break;
+	}
+	flag = 1;
 }
 

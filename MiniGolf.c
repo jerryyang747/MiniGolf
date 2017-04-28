@@ -69,7 +69,7 @@ void Delay100ms(uint32_t count); // time delay in 0.1 seconds
 // width=16 x height=10
 
 // *************************** Capture image dimensions out of BMP**********
-void displayStart(void);
+int displayStart(void);
 
 int main(void){
 	
@@ -94,7 +94,8 @@ int main(void){
   }
 }
 
-void displayStart(){
+int startArray[3] = {8,10,12};
+int displayStart(){
 	ST7735_SetCursor(4,2);
 	ST7735_OutString(" HOLE IN FUN ");
 	ST7735_SetCursor(4,3);
@@ -105,14 +106,19 @@ void displayStart(){
 	ST7735_OutString(" LEVEL SELECT ");
 	ST7735_SetCursor(4,12);
 	ST7735_OutString(" HELP ");
+	int index = 0;
 	while(1){
-		if((GPIO_PORTD_DATA_R & 0x1)==1){ break;}
-		ST7735_SetCursor(3,8);
+		if(PD0){ flag = 0; return index;}
+		ST7735_SetCursor(3,startArray[index]);
 		ST7735_OutChar(0x3E);
-		Delay100ms(5);
-		ST7735_SetCursor(3,8);
+		Delay100ms(1);
+		ST7735_SetCursor(3,startArray[index]);
 		ST7735_OutChar(0x20);
-		Delay100ms(5);
+		Delay100ms(1);
+		if(PD1) {flag = 0; index--;} // change index based on button press
+		if(PD2) {flag = 0; index++;}
+		if(index==-1){index=2;} // circular array
+		if(index==3){index=0;}
 	}
 }
 

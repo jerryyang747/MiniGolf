@@ -1,6 +1,7 @@
 
 void Buttons_Init(void);
-int getNumEdges(void);
 
-extern int hit;
-extern int help;
+extern int PD0;
+extern int PD1;
+extern int PD2;
+extern int flag;
