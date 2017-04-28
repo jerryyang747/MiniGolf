@@ -70,6 +70,8 @@ void Delay100ms(uint32_t count); // time delay in 0.1 seconds
 
 // *************************** Capture image dimensions out of BMP**********
 int displayStart(void);
+void displayHelp(void);
+int state=0;
 
 int main(void){
 	
@@ -85,9 +87,14 @@ int main(void){
 	EnableInterrupts();
 	
   ST7735_FillScreen(0x0000);            // set screen to black
-	
-	displayStart(); //Start Screen
-
+	/*
+	switch(displayStart()){
+		case 0: startGame();break;
+		case 1: selectLevel();break;
+		case 2: displayHelp(); break;//Start Screen
+	}
+	if(help ==1) displayStart
+	*/
   ST7735_FillScreen(0x0000);            // set screen to black
   while(1){
 		ST7735_OutString(" Initialization Successful " );
