@@ -24,6 +24,11 @@ Sensor.h(3): warning:  #1-D: last line of file ends without a newline
   void screenSaver(void);
 MiniGolf.c: 1 warning, 0 errors
 compiling Physics.c...
+Physics.c(12): warning:  #177-D: variable "xFinal" was declared but never referenced
+        static int xFinal  = 0;
+Physics.c(13): warning:  #177-D: variable "yFinal" was declared but never referenced
+        static int yFinal = 0;
+Physics.c: 2 warnings, 0 errors
 compiling Sensor.c...
 Sensor.h(3): warning:  #1-D: last line of file ends without a newline
   void screenSaver(void);
@@ -31,5 +36,5 @@ Sensor.c(11): warning:  #177-D: variable "time" was declared but never reference
         int time = 0;
 Sensor.c: 2 warnings, 0 errors
 linking...
-Program Size: Code=5224 RO-data=2292 RW-data=132 ZI-data=1180  
-".\MiniGolf.axf" - 0 Error(s), 3 Warning(s).
+Program Size: Code=4908 RO-data=2292 RW-data=120 ZI-data=1176  
+".\MiniGolf.axf" - 0 Error(s), 5 Warning(s).
