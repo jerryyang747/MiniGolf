@@ -40,7 +40,7 @@ void ADC_Init(void){ volatile unsigned long delay = 0;
 // Busy-wait Analog to digital conversion
 // Input: none
 // Output: 12-bit result of ADC conversion
-uint32_t ADC_In(void){  uint32_t result;
+int ADC_In(void){  uint32_t result;
   ADC0_PSSI_R = 0x04;           		// 1) initiate SS3
   while((ADC0_RIS_R&0x04)==0){};   // 2) wait for conversion done
   result = ADC0_SSFIFO2_R&0xFFF;   // 3) read result

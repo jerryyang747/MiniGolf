@@ -20,21 +20,24 @@ assembling Print.s...
 compiling ST7735.c...
 compiling EdgeInterrupt.c...
 compiling MiniGolf.c...
-Sensor.h(3): warning:  #1-D: last line of file ends without a newline
-  void screenSaver(void);
-MiniGolf.c: 1 warning, 0 errors
 compiling Physics.c...
-Physics.c(14): warning:  #177-D: variable "xFinal" was declared but never referenced
+Physics.c(17): warning:  #177-D: variable "xFinal" was declared but never referenced
         static int xFinal  = 0;
-Physics.c(15): warning:  #177-D: variable "yFinal" was declared but never referenced
+Physics.c(18): warning:  #177-D: variable "yFinal" was declared but never referenced
         static int yFinal = 0;
-Physics.c: 2 warnings, 0 errors
+Physics.c(48): warning:  #1-D: last line of file ends without a newline
+  }
+Physics.c: 3 warnings, 0 errors
 compiling Sensor.c...
-Sensor.h(3): warning:  #1-D: last line of file ends without a newline
-  void screenSaver(void);
 Sensor.c(11): warning:  #177-D: variable "time" was declared but never referenced
+        int time = 0;
+Sensor.c: 1 warning, 0 errors
+linking...
+Program Size: Code=4868 RO-data=2292 RW-data=120 ZI-data=1176  
+".\MiniGolf.axf" - 0 Error(s), 4 Warning(s).
+ variable "time" was declared but never referenced
         int time = 0;
 Sensor.c: 2 warnings, 0 errors
 linking...
 Program Size: Code=4868 RO-data=2292 RW-data=120 ZI-data=1176  
-".\MiniGolf.axf" - 0 Error(s), 5 Warning(s).
+".\MiniGolf.axf" - 0 Error(s), 6 Warning(s).
