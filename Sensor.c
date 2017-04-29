@@ -8,7 +8,7 @@ void Sensor_Init(){
 }
 int getDistance(){ 
 	int distance = 0;
-	int time = 0;
+//	int time = 0;
 	//Send signal on TRIG
 	//Measure time of echo using timer
 	//convert to distance
