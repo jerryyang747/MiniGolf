@@ -4,6 +4,8 @@
 #include "ST7735.h"
 int a = -10;
 void Collide(struct Object obj1, struct Object obj2);
+int getSpeed(void);
+int getDir(void); 
 int run[181];
 int rise[181] = {0,0,0,0,0, 12,12,12,12,12, 20,20,20,20,20, 30,30,30,30,30, 41,41,41,41,41, 51,51,51,51,51, 63,63,63,63,63, 75,75,75,75,75, 90,90,90,90,90, 100,100,100,100,100, 129,129,129,129,129, 150,150,150,150,150, 189,189,189,189,189, 235,235,235,235,235, 285,285,285,285,285, 450,450,450,450,450, 712,712,712,712,712, 5729,5729,5729,5729,5729, 
 								-5729,-5729,-5729,-5729,-5729, -712,-712,-712,-712,-712, -450,-450,-450,-450,-450, -285,-285,-285,-285,-285, -235,-235,-235,-235,-235, -189,-189,-189,-189,-189, -150,-150,-150,-150,-150, -129,-129,-129,-129,-129, -100,-100,-100,-100,-100, -90,-90,-90,-90,-90, -75,-75,-75,-75,-75, -63,-63,-63,-63,-63, -51,-51,-51,-51,-51, -41,-41,-41,-41,-41, 
@@ -19,10 +21,12 @@ void ArrayInit(void)
 }
 //dir is value from 0 to 180
 //speed is value from 0-10
-void MoveBall(Ball ball, int speed, int dir){
+void MoveBall(Ball ball ){
 	//calculate final position
 	static int xFinal  = 0;
 	static int yFinal = 0;
+	int speed = getSpeed();
+	int index = getDir();
 	
 	ST7735_FillRect(ball.xPos,ball.yPos, ball.width, ball.height, 0x07E0);
 	
@@ -42,7 +46,10 @@ int getSpeed(void)
 }
 int getDir(void)
 	{
-		uint32_t data = ADC_In();
+		int data = (int)ConvertDir(ADC_In());
+		return data; 
+		
+		
 		
 	}
 int Convert(uint32_t input){ //Convert reading from ADC_In to distance along slide pot
@@ -51,3 +58,10 @@ int Convert(uint32_t input){ //Convert reading from ADC_In to distance along sli
 	int result = (int) (slope + intercept);
 	
 	return result;}
+int ConvertDir(uint32_t input)
+{
+	int slope = 181*input/4095;
+	int intercept = 0; 
+	int result  = slope +intercept;
+return result; 	
+}
