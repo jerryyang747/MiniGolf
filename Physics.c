@@ -7,6 +7,8 @@ void Collide(struct Object obj1, struct Object obj2);
 
 //dir is value from 0 to 180
 //speed is value from 0-10
+int run[180];
+int rise[180];
 void MoveBall(Ball ball, int speed, int dir){
 	//calculate final position
 	static int xFinal  = 0;
