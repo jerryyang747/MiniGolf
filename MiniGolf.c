@@ -58,7 +58,8 @@
 #include "Sound.h"
 #include "Sensor.h"
 #include "EdgeInterrupt.h"
-
+#include "MiniGolf.h"
+void PortFInit(void);
 void DisableInterrupts(void); // Disable interrupts
 void EnableInterrupts(void);  // Enable interrupts
 void Delay100ms(uint32_t count); // time delay in 0.1 seconds
@@ -84,8 +85,9 @@ int main(void){
 	Sound_Init();
 	Buttons_Init();
 	Sensor_Init();
+	PortFInit();
 	EnableInterrupts();
-	
+	GPIO_PORTF_DATA_R ^=0x02; //toggle heartbeat
   ST7735_FillScreen(0x0000);            // set screen to black
 	/*
 	switch(displayStart()){
@@ -96,6 +98,9 @@ int main(void){
 	if(help ==1) displayStart
 	*/
   ST7735_FillScreen(0x0000);            // set screen to black
+	ST7735_DrawBitmap(64,149, ball, 23,16);
+	//ST7735_DrawBitmap(64, 149, ball[], Ball.width,Ball.height);
+	GPIO_PORTF_DATA_R ^=0x02; // toggle heartbeat
   while(1){
 		ST7735_OutString(" Initialization Successful " );
   }
@@ -141,4 +146,15 @@ void Delay100ms(uint32_t count){uint32_t volatile time;
     }
     count--;
   }
+}
+
+void PortFInit(void)
+{
+	volatile unsigned int delay=0;
+	SYSCTL_RCGC2_R|=0x20;
+	delay++;
+	delay++;
+	GPIO_PORTF_DIR_R |=0x02; //PF2
+	GPIO_PORTF_AFSEL_R &=0x0;
+	GPIO_PORTF_DEN_R |=0x02;
 }
