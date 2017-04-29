@@ -5,13 +5,22 @@
 #include "ADC.h"
 int Convert(int input);
 
-void Collide(Ball ball, struct Object obj2);
+void Collide(Ball ball, struct Object obj2){
+		/*
+	switch(obj2){
+		case hole: display hole score and go to next level;
+	case water: send back to initial position
+	case sand: reduce speed
+	case tree: bounce
+	case out: send back to initial pos
+	*/
+	
+}
 
 //dir is value from 0 to 180
 //speed is value from 0-10
 int run[180];
 int rise[180];
-int a=-10;
 void MoveBall(Ball ball, int speed, int dir){
 	//calculate final position
 	static int xFinal  = 0;
