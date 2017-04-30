@@ -24,15 +24,15 @@ void ADC_Init(void){ volatile unsigned long delay = 0;
                                   // 5a) configure PE4 as ?? (skip this line because PCTL is for digital only)
   GPIO_PORTE_PCTL_R = GPIO_PORTE_PCTL_R&0xFF00FFFF;
   GPIO_PORTE_AMSEL_R |= 0x30;     // 6) enable analog functionality on PE4 PE5
-  ADC0_PC_R &= ~0xF;              // 8) clear max sample rate field
-  ADC0_PC_R |= 0x1;               //    configure for 125K samples/sec
-  ADC0_SSPRI_R = 0x3210;          // 9) Sequencer 3 is lowest priority
-  ADC0_ACTSS_R &= ~0x0004;        // 10) disable sample sequencer 2
-  ADC0_EMUX_R &= ~0x0F00;         // 11) seq2 is software trigger
-  ADC0_SSMUX2_R = 0x0089;         // 12) set channels for SS2
-  ADC0_SSCTL2_R = 0x0060;         // 13) no TS0 D0 IE0 END0 TS1 D1, yes IE1 END1
-  ADC0_IM_R &= ~0x0004;           // 14) disable SS2 interrupts
-  ADC0_ACTSS_R |= 0x0004;         // 15) enable sample sequencer 2
+  ADC1_PC_R &= ~0xF;              // 8) clear max sample rate field
+  ADC1_PC_R |= 0x1;               //    configure for 125K samples/sec
+  ADC1_SSPRI_R = 0x3210;          // 9) Sequencer 3 is lowest priority
+  ADC1_ACTSS_R &= ~0x0004;        // 10) disable sample sequencer 2
+  ADC1_EMUX_R &= ~0x0F00;         // 11) seq2 is software trigger
+  ADC1_SSMUX2_R = 0x0089;         // 12) set channels for SS2
+  ADC1_SSCTL2_R = 0x0060;         // 13) no TS0 D0 IE0 END0 TS1 D1, yes IE1 END1
+  ADC1_IM_R &= ~0x0004;           // 14) disable SS2 interrupts
+  ADC1_ACTSS_R |= 0x0004;         // 15) enable sample sequencer 2
 	
 }
 
@@ -41,11 +41,11 @@ void ADC_Init(void){ volatile unsigned long delay = 0;
 // Input: none
 // Output: 12-bit result of ADC conversion
 int ADC_In(void){  uint32_t result;
-  ADC0_PSSI_R = 0x04;           		// 1) initiate SS3
-  while((ADC0_RIS_R&0x04)==0){};   // 2) wait for conversion done
-  result = ADC0_SSFIFO2_R&0xFFF;   // 3) read result
-	result = ADC0_SSFIFO2_R&0xFFF;
-  ADC0_ISC_R = 0x004;             // 4) acknowledge completion
+  ADC1_PSSI_R = 0x04;           		// 1) initiate SS3
+  while((ADC1_RIS_R&0x04)==0){};   // 2) wait for conversion done
+  result = ADC1_SSFIFO2_R&0xFFF;   // 3) read result
+	result = ADC1_SSFIFO2_R&0xFFF;
+  ADC1_ISC_R = 0x004;             // 4) acknowledge completion
   return result;
 }
 
