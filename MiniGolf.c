@@ -111,6 +111,7 @@ void displayHelp(){
 	ST7735_OutString(" Press any button to\n go back.");
 	
 	while(!(PD0||PD1|PD2)){}
+	flag=0;
 }
 
 // You can use this timer only if you learn how it works
