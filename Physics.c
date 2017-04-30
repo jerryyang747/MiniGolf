@@ -3,6 +3,7 @@
 #include "MiniGolf.h"
 #include "ST7735.h"
 #include "ADC.h"
+//#include <cmath.h>
 //int a = -10;
 //void Collide(struct Object obj1, struct Object obj2);
 int getSpeed(void);
@@ -12,10 +13,10 @@ int ConvertDir(uint32_t input);
 void setBall(void);
 void showDir(void);
 void showSpeed(void);
-int run[181] = {1,1,1,1,1, 1,1,1,1,1, 5,5,5,5,5, 3,3,3,3,3, 2,2,2,2,2, 2,2,2,2,2, 3,3,3,3,3, 4,4,4,4,4, 4,4,4,4,4, 1,1,1,1,1, 5,5,5,5,5, 2,2,2,2,2, 1,1,1,1,1, 5,5,5,5,5, 1,1,1,1,1, 2,2,2,2,2, 1,1,1,1,1, 
+short run[181] = {1,1,1,1,1, 1,1,1,1,1, 5,5,5,5,5, 3,3,3,3,3, 2,2,2,2,2, 2,2,2,2,2, 3,3,3,3,3, 4,4,4,4,4, 4,4,4,4,4, 1,1,1,1,1, 5,5,5,5,5, 2,2,2,2,2, 1,1,1,1,1, 5,5,5,5,5, 1,1,1,1,1, 2,2,2,2,2, 1,1,1,1,1, 
 1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 2,2,2,2,2, 1,1,1,1,1, 5,5,5,5,5, 1,1,1,1,1, 2,2,2,2,2, 5,5,5,5,5, 1,1,1,1,1, 4,4,4,4,4, 4,4,4,4,4, 3,3,3,3,3, 2,2,2,2,2, 2,2,2,2,2, 
 3,3,3,3,3, 5,5,5,5,5, -1,-1,-1,-1,-1, -1,-1,-1,-1,-1,-1}; 
-int rise[181] = {0,0,0,0,0, 0,0,0,0,0, 1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 2,2,2,2,2, 3,3,3,3,3, 3,3,3,3,3, 1,1,1,1,1, 6,6,6,6,6, 3,3,3,3,3, 2,2,2,2,2, 
+short rise[181] = {0,0,0,0,0, 0,0,0,0,0, 1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 2,2,2,2,2, 3,3,3,3,3, 3,3,3,3,3, 1,1,1,1,1, 6,6,6,6,6, 3,3,3,3,3, 2,2,2,2,2, 
 12,12,12,12,12, 3,3,3,3,3, 9,9,9,9,9, 7,7,7,7,7, 10,10,10,10,10, -10,-10,-10,-10, -7,-7,-7,-7,-7, -9,-9,-9,-9,-9, -3,-3,-3,-3,-3, -12,-12,-12,-12,-12, 
 -2,-2,-2,-2,-2, -3,-3,-3,-3,-3, -6,-6,-6,-6,-6, -1,-1,-1,-1,-1, -3,-3,-3,-3,-3, -3,-3,-3,-3,-3, -2,-2,-2,-2,-2, -1,-1,-1,-1,-1, -1,-1,-1,-1,-1, -1,-1,-1,-1,-1,
 -1,-1,-1,-1,-1, 0,0,0,0,0, 0,0,0,0,0,0};
@@ -48,7 +49,7 @@ void MoveBall(void){
 	int bally = 0; 
 	for(x = 0; x<speed; x++)
 	{
-		ST7735_FillRect(getBallX()+ballx, getBallY()+bally, getBallWidth()-16, getBallHeight()-35, 0x07E0);
+		ST7735_FillRect(getBallX()+ballx, getBallY()+bally, getBallWidth(), getBallHeight(), 0x07E0);
 		ballx += Run;
 		bally += Rise;
 		ST7735_DrawBitmap(getBallX()+ballx, getBallY()+bally, ball,getBallWidth(),getBallHeight());
@@ -57,13 +58,30 @@ void MoveBall(void){
 }
 void showSpeed(void){
 		//int magnitude = getSpeed();
-		int magnitude = 0;
+		int magnitude = 3;
 		int xPos = getBallX() + magnitude + 17;
 		int yPos = getBallY() - magnitude - 10;
 		ST7735_FillRect(xPos, yPos, 2, 2, 0x0000);
 		
 	}
-	
+void showDir(void)
+{
+	//int magnitude = 3; //tester
+	int xPos = getBallX() + 27;
+	int yPos = getBallY() - 9;
+	int poserx =0;int posery =0;
+	int index = 0; // tester
+	//ST7735_FillRect(xPos, yPos, 2,2,0x07E0);
+	for(index =0; index<181; index++){
+		ST7735_FillRect(xPos+poserx, yPos+posery, 2,2,0x07E0);
+	poserx = (run[index]*2);
+	posery = (2*rise[index]*-1);
+		if(posery>0){
+			poserx*=-1;
+			poserx-=27;}
+	ST7735_FillRect(xPos+poserx, yPos+posery, 2,2,0x000);}
+	Delay100ms(1);
+}
 
 //void WaterTrap(Ball ball, gameLevel lvl);
 //void SandTrap(Ball ball, gameLevel lvl);

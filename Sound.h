@@ -9,3 +9,4 @@
 void Sound_Init(void);
 void Sound_Play(const uint8_t *pt, uint32_t count);
 
+const unsigned char Flute[2] = {0x00, 0x04};

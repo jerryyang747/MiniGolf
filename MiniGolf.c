@@ -65,7 +65,7 @@ int main(void){
 	DisableInterrupts();
   TExaS_Init();  // set system clock to 80 MHz
   Random_Init(1);
-	ST7735_InitR(INITR_REDTAB);
+	//ST7735_InitR(INITR_REDTAB);
   Output_Init();
 	ADC_Init();
 	Sound_Init();
@@ -79,7 +79,7 @@ int main(void){
   ST7735_FillScreen(0x07E0);            // set screen to green
 	setBall(); // set the Ball to the original position.
 	//MoveBall();
-	showSpeed();
+	showDir();
 	/*
 	switch(displayStart()){
 		case 0: startGame();break;
