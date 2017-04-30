@@ -14,16 +14,16 @@ void PE_Init(void);
 // Output: none
 void ADC_Init(void){ volatile unsigned long delay = 0;
 	PE_Init();
-	SYSCTL_RCGCADC_R |= 0x02; 	//Activate ADC0, SYSCTL_RCGCADC_R
+	SYSCTL_RCGCADC_R |= 0x03; 	//Activate ADC0, SYSCTL_RCGCADC_R
 	delay++; delay++; 	delay++; delay++;delay++; delay++;						//Delay to stabilize
 	ADC1_PC_R =0x01;								//configure for 125K, SYSCTL_RCGCADC_R
 	ADC1_ACTSS_R &= ~0x0008;        //disable sample sequencer 3
 	//ADC1_SAC_R = 6;									//Slow down fluctuations
   ADC1_SSPRI_R = 0x0123;          //Sequencer 3 is highest priority
   ADC1_EMUX_R &= ~0xF000;         //seq3 is software trigger
-  ADC1_SSMUX3_R &= ~0x000F;       //clear SS3 field
-  ADC1_SSMUX3_R += 1;             //set channel Ain1 (PE2)
-  ADC1_SSCTL3_R = 0x0006;         //set ADC modes
+  ADC1_SSMUX2_R &= ~0x000F;       //clear SS3 field
+  ADC1_SSMUX2_R += 1;             //set channel Ain1 (PE2)
+  ADC1_SSCTL2_R = 0x0006;         //set ADC modes
 	ADC1_IM_R &= ~0x8;
   ADC1_ACTSS_R |= 0x0008;         //enable sample sequencer 3
 	

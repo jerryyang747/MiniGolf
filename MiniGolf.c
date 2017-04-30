@@ -77,7 +77,9 @@ int main(void){
 //	ST7735_OutString("Initialized"); 
 	GPIO_PORTF_DATA_R ^=0x02; //toggle heartbeat
   ST7735_FillScreen(0x07E0);            // set screen to green
-	setBall(); // set the Ball to the original position. 
+	setBall(); // set the Ball to the original position.
+	//MoveBall();
+	showSpeed();
 	/*
 	switch(displayStart()){
 		case 0: startGame();break;

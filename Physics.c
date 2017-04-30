@@ -10,6 +10,8 @@ int getDir(void);
 int Convert(uint32_t input);
 int ConvertDir(uint32_t input); 
 void setBall(void);
+void showDir(void);
+void showSpeed(void);
 int run[181] = {1,1,1,1,1, 1,1,1,1,1, 5,5,5,5,5, 3,3,3,3,3, 2,2,2,2,2, 2,2,2,2,2, 3,3,3,3,3, 4,4,4,4,4, 4,4,4,4,4, 1,1,1,1,1, 5,5,5,5,5, 2,2,2,2,2, 1,1,1,1,1, 5,5,5,5,5, 1,1,1,1,1, 2,2,2,2,2, 1,1,1,1,1, 
 1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 2,2,2,2,2, 1,1,1,1,1, 5,5,5,5,5, 1,1,1,1,1, 2,2,2,2,2, 5,5,5,5,5, 1,1,1,1,1, 4,4,4,4,4, 4,4,4,4,4, 3,3,3,3,3, 2,2,2,2,2, 2,2,2,2,2, 
 3,3,3,3,3, 5,5,5,5,5, -1,-1,-1,-1,-1, -1,-1,-1,-1,-1,-1}; 
@@ -52,10 +54,17 @@ void MoveBall(void){
 		ST7735_DrawBitmap(getBallX()+ballx, getBallY()+bally, ball,getBallWidth(),getBallHeight());
 		Delay100ms(1);
 	}
-	
-	
-	
 }
+void showSpeed(void){
+		//int magnitude = getSpeed();
+		int magnitude = 0;
+		int xPos = getBallX() + magnitude + 17;
+		int yPos = getBallY() - magnitude - 10;
+		ST7735_FillRect(xPos, yPos, 2, 2, 0x0000);
+		
+	}
+	
+
 //void WaterTrap(Ball ball, gameLevel lvl);
 //void SandTrap(Ball ball, gameLevel lvl);
 //void InHole(Ball ball, Hole hole);
