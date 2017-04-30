@@ -8,4 +8,4 @@
 .\minigolf.o: Sound.h
 .\minigolf.o: Sensor.h
 .\minigolf.o: EdgeInterrupt.h
-.\minigolf.o: MiniGolf.h
+.\minigolf.o: Physics.h

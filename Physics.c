@@ -3,12 +3,13 @@
 #include "MiniGolf.h"
 #include "ST7735.h"
 #include "ADC.h"
-int a = -10;
-void Collide(struct Object obj1, struct Object obj2);
+//int a = -10;
+//void Collide(struct Object obj1, struct Object obj2);
 int getSpeed(void);
 int getDir(void); 
 int Convert(uint32_t input);
 int ConvertDir(uint32_t input); 
+void setBall(void);
 int run[181] = {1,1,1,1,1, 1,1,1,1,1, 5,5,5,5,5, 3,3,3,3,3, 2,2,2,2,2, 2,2,2,2,2, 3,3,3,3,3, 4,4,4,4,4, 4,4,4,4,4, 1,1,1,1,1, 5,5,5,5,5, 2,2,2,2,2, 1,1,1,1,1, 5,5,5,5,5, 1,1,1,1,1, 2,2,2,2,2, 1,1,1,1,1, 
 1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 2,2,2,2,2, 1,1,1,1,1, 5,5,5,5,5, 1,1,1,1,1, 2,2,2,2,2, 5,5,5,5,5, 1,1,1,1,1, 4,4,4,4,4, 4,4,4,4,4, 3,3,3,3,3, 2,2,2,2,2, 2,2,2,2,2, 
 3,3,3,3,3, 5,5,5,5,5, -1,-1,-1,-1,-1, -1,-1,-1,-1,-1,-1}; 
@@ -19,48 +20,54 @@ int rise[181] = {0,0,0,0,0, 0,0,0,0,0, 1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,
 
 //dir is value from 0 to 180
 //speed is value from 0-10
-void MoveBall(Ball ball ){
+void setBall(void)
+{
+	setBallX(64);
+	setBallY(149);
+	setBallWidth(35);
+	setBallHeight(16);
+	ST7735_DrawBitmap(getBallX(), getBallY(), ball,getBallWidth(),getBallHeight()); // set the ball to  the starting position. 
+}
+void MoveBall(void){
 	//calculate final position
-	static int xFinal  = 0;
-	static int yFinal = 0;
-	int speed = getSpeed();
-	int index = getDir();
+	
+	//int speed = getSpeed();
+	//int index = getDir();
+	int index = 19;
+	int speed = 7;
 	int Rise = rise[index]; 
 	int Run = run[index]; 
-	if(Rise<0) 
-	{Run *=-1; Rise*=-1;}
-	speed *= 15; //that is the factor t for now
+	Rise*=-1;
+	if(Rise>0)
+	{Run*=-1;}
+	speed *= 2; //that is the factor t for now
 	volatile int x = 0; 
 	int ballx =0; 
 	int bally = 0; 
 	for(x = 0; x<speed; x++)
 	{
-		ST7735_FillRect(ball.xPos+ballx, ball.yPos+bally, ball.width, ball.height, 0x07E0);
+		ST7735_FillRect(getBallX()+ballx, getBallY()+bally, getBallWidth()-16, getBallHeight()-35, 0x07E0);
 		ballx += Run;
 		bally += Rise;
-		ST7735_DrawBitmap(ball.xPos+ballx, ball.yPos+bally, ball.image,ball.width,ball.height);
+		ST7735_DrawBitmap(getBallX()+ballx, getBallY()+bally, ball,getBallWidth(),getBallHeight());
+		Delay100ms(1);
 	}
 	
 	
-	//calculate trajectory - lines of slope 0 to infinity (rise over run)
-	//while(v !=0){
-		//for(int y=0;y<
-	
 	
 }
-void WaterTrap(Ball ball, gameLevel lvl);
-void SandTrap(Ball ball, gameLevel lvl);
-void InHole(Ball ball, Hole hole);
+//void WaterTrap(Ball ball, gameLevel lvl);
+//void SandTrap(Ball ball, gameLevel lvl);
+//void InHole(Ball ball, Hole hole);
 int getSpeed(void)
 {
 	uint32_t data = Convert(ADC_In()); // get the data from the ADC
-	data = 5;//tester 
+
 	return data; 
 }
 int getDir(void)
 	{
 		int data = (int)ConvertDir(ADC_In());
-		data = 19; //tester
 		return data; 
 		
 		
