@@ -35,18 +35,11 @@ int getDistance(){
 
 void screenSaver(){
 	//int dist
-	while(10000 >2000){
-		ST7735_FillScreen(0x0000);
-		ST7735_SetCursor(0,7);
-		ST7735_OutString(" SCREEN SAVER MODE ");
-	}
-	/*
-	while(1){
+	
+	while(getDistance()>2000){
 		ST7735_FillScreen(0);
 		ST7735_SetCursor(0,7);
 		ST7735_OutString(" SCREEN SAVER MODE ");
-	}*/
-	
-	// Restore current screen state
+	}
 	
 }

@@ -46,13 +46,15 @@ int main(void){
 	Sensor_Init();
 	PortFInit();
 	EnableInterrupts();
-	ST7735_FillScreen(0x0000); 
-//	ST7735_OutString("Initialized"); 
 	GPIO_PORTF_DATA_R ^=0x02; //toggle heartbeat
-  ST7735_FillScreen(0x07E0);            // set screen to green
+	
+	
+	//displayStart();
 	while(1){
 	setBall(); // set the Ball to the original position. 
-	MoveBall();}
+	MoveBall();	
+	//screenSaver();
+	}
 	/*
 	switch(displayStart()){
 		case 0: startGame();break;
@@ -85,10 +87,10 @@ int displayStart(){
 		if(PD0){ flag = 0; return index;}
 		ST7735_SetCursor(3,startArray[index]);
 		ST7735_OutChar(0x3E);
-		Delay100ms(1);
+		Delay100ms(100);
 		ST7735_SetCursor(3,startArray[index]);
 		ST7735_OutChar(0x20);
-		Delay100ms(1);
+		Delay100ms(100);
 		if(PD1) {flag = 0; index--;} // change index based on button press
 		if(PD2) {flag = 0; index++;}
 		if(index==-1){index=2;} // circular array
