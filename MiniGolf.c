@@ -36,6 +36,10 @@
 #include "EdgeInterrupt.h"
 #include "Physics.h"
 //#include "MiniGolf.h"
+#define Water 1
+#define Sand 2
+#define TreeA 3
+#define TreeB 4
 void PortFInit(void);
 void DisableInterrupts(void); // Disable interrupts
 void EnableInterrupts(void);  // Enable interrupts
@@ -53,13 +57,19 @@ int getBallWidth(void); int getBallHeight(void); int getBallX(void); int getBall
 void setBallWidth(int set); void setBallHeight(int set); void setBallX(int set); void setBallY(int set);
 int state=0;
 struct Object {int xPos; int yPos; uint16_t width; uint16_t height;};
+int getXPos(int item);int getYPos(int item);
+void setXPos(int item, int x); void setYPos(int item, int y);
 
 typedef struct Object Ball;
-typedef const struct Object Tree;
-typedef const struct Object Player;
-typedef const struct Object Hole;
+typedef  struct Object Tree;
+typedef  struct Object San;
+typedef  struct Object Hole;
+typedef  struct Object Wat;
 Ball ball1; 
-	
+Tree treeA;
+Tree treeB;
+San sand;
+Wat water;
 int main(void){
 	// setting the original location of the ball should be done with Physics.c file to avoid redudancy (calibration)
 	DisableInterrupts();
@@ -80,6 +90,7 @@ int main(void){
 	setBall(); // set the Ball to the original position.
 	//MoveBall();
 	showDir();
+	MoveBall();
 	/*
 	switch(displayStart()){
 		case 0: startGame();break;
@@ -147,6 +158,47 @@ void setBallWidth(int set){ball1.width = set;}
 void setBallHeight(int set){ball1.height=set;}
 void setBallX(int set){ball1.xPos=set;}
 void setBallY(int set){ball1.yPos=set;}
+int getXPos(int item) {
+	switch (item)
+	{
+		case Water: return water.xPos;
+		case Sand: return sand.xPos;
+		case TreeA: return treeA.xPos;
+		case TreeB: return treeB.xPos;
+	}
+	return 0;
+}
+int getYPos(int item)
+{
+	switch (item)
+	{
+		case Water: return water.yPos;
+		case Sand: return sand.yPos;
+		case TreeA: return treeA.yPos;
+		case TreeB: return treeB.yPos;
+	}
+	return 0;
+}
+void setXPos(int item, int x)
+{
+	switch (item)
+	{
+		case Water: water.xPos = x; break;
+		case Sand: water.xPos = x; break;
+		case TreeA: water.xPos = x; break;
+		case TreeB: water.xPos = x; break;
+	}
+}
+void setYPos(int item, int y)
+{
+	switch (item)
+	{
+		case Water: water.xPos = y; break;
+		case Sand: water.xPos = y; break;
+		case TreeA: water.xPos = y; break;
+		case TreeB: water.xPos = y; break;
+	}
+}
 void PortFInit(void)
 {
 	volatile unsigned int delay=0;

@@ -10,6 +10,8 @@
 int getBallWidth(void); int getBallHeight(void); int getBallX(void); int getBallY(void);
 void setBallWidth(int set); void setBallHeight(int set); void setBallX(int set); void setBallY(int set);
 void Delay100ms(uint32_t count);
+int getXPos(int item);int getYPos(int item);
+int setXPos(int item, int x); int setYPos(int item, int y);
 
 //Image data
 const unsigned short tree[] = {

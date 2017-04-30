@@ -3,6 +3,10 @@
 #include "MiniGolf.h"
 #include "ST7735.h"
 #include "ADC.h"
+#define Water 1
+#define Sand 2
+#define TreeA 3
+#define TreeB 4
 //#include <cmath.h>
 //int a = -10;
 //void Collide(struct Object obj1, struct Object obj2);
@@ -75,43 +79,36 @@ void MoveBall(void){
 	int speed = 7;
 	int Rise = rise[index]; 
 	int Run = run[index]; 
-	Rise*=-1;
-	if(Rise>0)
-	{Run*=-1;}
-	speed *= 2; //that is the factor t for now
+	speed *= 1; //that is the factor t for now
 	volatile int x = 0; 
 	int ballx =0; 
 	int bally = 0; 
 	for(x = 0; x<speed; x++)
 	{
-		ST7735_FillRect(getBallX()+ballx, getBallY()+bally, getBallWidth(), getBallHeight(), 0x07E0);
+		ST7735_FillRect(getBallX()+ballx, getBallY()-bally, getBallWidth(), getBallHeight(), 0x07E0);
 		ballx += Run;
 		bally += Rise;
-		ST7735_DrawBitmap(getBallX()+ballx, getBallY()+bally, ball,getBallWidth(),getBallHeight());
+		ST7735_DrawBitmap(getBallX()+ballx, getBallY()-bally, ball,getBallWidth(),getBallHeight());
 		Delay100ms(1);
 	}
 }
-void showSpeed(void){
-		//int magnitude = getSpeed();
-		int magnitude = 3;
-		int xPos = getBallX() + magnitude + 17;
-		int yPos = getBallY() - magnitude - 10;
-		ST7735_FillRect(xPos, yPos, 2, 2, 0x0000);
+
 		
-	}
 void showDir(void)
 {
-	//int magnitude = 3; //tester
+	int magnitude = 7; 
+	if(magnitude==0){magnitude =1;}
+	else if (magnitude >7){magnitude =7;}
 	int xPos = getBallX()+13 ;
 	int yPos = getBallY()-9;
 	int poserx =0;int posery =0;
-	int index = 0; // tester
+	int index = 19; // tester
 	//ST7735_FillRect(xPos, yPos, 2,2,0x07E0);
-	for(index =0; index<360; index++){
-		ST7735_FillRect(xPos+poserx, yPos-posery, 2,2,0x07E0);
-	poserx = (run[index]*2);
-	posery = (2*rise[index]);
-	ST7735_FillRect(xPos+poserx, yPos-posery, 2,2,0x000);}
+	
+	ST7735_FillRect(xPos+poserx, yPos-posery, 2,2,0x07E0);
+	poserx = (run[index]) *magnitude;
+	posery = (rise[index]) * magnitude;
+	ST7735_FillRect(xPos+poserx, yPos-posery, 2,2,0x000);
 	Delay100ms(1);
 }
 
