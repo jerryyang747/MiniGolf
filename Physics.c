@@ -102,19 +102,16 @@ void showSpeed(void){
 void showDir(void)
 {
 	//int magnitude = 3; //tester
-	int xPos = getBallX() + 27;
-	int yPos = getBallY() - 9;
+	int xPos = getBallX()+13 ;
+	int yPos = getBallY()-9;
 	int poserx =0;int posery =0;
 	int index = 0; // tester
 	//ST7735_FillRect(xPos, yPos, 2,2,0x07E0);
-	for(index =0; index<181; index++){
-		ST7735_FillRect(xPos+poserx, yPos+posery, 2,2,0x07E0);
+	for(index =0; index<360; index++){
+		ST7735_FillRect(xPos+poserx, yPos-posery, 2,2,0x07E0);
 	poserx = (run[index]*2);
-	posery = (2*rise[index]*-1);
-		if(posery>0){
-			poserx*=-1;
-			poserx-=27;}
-	ST7735_FillRect(xPos+poserx, yPos+posery, 2,2,0x000);}
+	posery = (2*rise[index]);
+	ST7735_FillRect(xPos+poserx, yPos-posery, 2,2,0x000);}
 	Delay100ms(1);
 }
 
