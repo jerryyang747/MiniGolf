@@ -93,6 +93,19 @@ void showDir(void)
 	ST7735_FillRect(xPos+poserx, yPos+posery, 2,2,0x000);}
 	Delay100ms(1);
 }
+
+void displayLevel(){
+	ST7735_DrawBitmap(0,160,lvl1,110,136);
+	ST7735_DrawBitmap(15,150,ball,7,7);
+	ST7735_DrawBitmap(30,80,tree,12,12);
+	ST7735_DrawBitmap(70,50,Hole, 7,14);
+}
+
+
+
+
+
+
 int Convert(uint32_t input){ //Convert reading from ADC_In to distance along slide pot
   double slope = 11 * input/4095; 			//y = 0.0046806x+0.093609
 	double intercept = 0;		//r = 0.992

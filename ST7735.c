@@ -1544,7 +1544,7 @@ int ferror(FILE *f){
 // Outputs: none
 void Output_Init(void){
   ST7735_InitR(INITR_REDTAB);
-  ST7735_FillScreen(0x07E0);                 // set screen to black
+  ST7735_FillScreen(0x0000);                 // set screen to black
 }
 
 // Clear display

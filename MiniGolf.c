@@ -48,21 +48,16 @@ int main(void){
 	EnableInterrupts();
 	GPIO_PORTF_DATA_R ^=0x02; //toggle heartbeat
 	
+	displayHelp();
 	
-	//displayStart();
-	while(1){
-	setBall(); // set the Ball to the original position. 
-	MoveBall();	
-	//screenSaver();
-	}
 	/*
 	switch(displayStart()){
 		case 0: startGame();break;
 		case 1: selectLevel();break;
 		case 2: displayHelp(); break;//Start Screen
 	}
-	if(help ==1) displayStart
-	*/
+	if(help ==1) displayStart();*/
+	
 	
 	//ST7735_DrawBitmap(ball1.xPos, ball1.yPos, ball1.image, ball1.width, ball1.height);
 	//ST7735_DrawBitmap(64, 149, ball[], Ball.width,Ball.height);
@@ -98,7 +93,25 @@ int displayStart(){
 	}
 }
 
-
+void displayHelp(){
+	ST7735_SetCursor(0,0);
+	ST7735_OutString("HELP");
+	ST7735_SetCursor(0,2);
+	ST7735_OutString(" Left button- Swing");
+	ST7735_SetCursor(0,4);
+	ST7735_OutString(" Slide pot- Power");
+	ST7735_SetCursor(0,6);
+	ST7735_OutString(" Knob pot- Direction");
+	ST7735_SetCursor(0,8);
+	ST7735_OutString(" Top button- Options");
+	ST7735_SetCursor(0,10);
+	ST7735_OutString(" Bottom button- Exit");
+	
+	ST7735_SetCursor(0,13);
+	ST7735_OutString(" Press any button to\n go back.");
+	
+	while(!(PD0||PD1|PD2)){}
+}
 
 // You can use this timer only if you learn how it works
 
