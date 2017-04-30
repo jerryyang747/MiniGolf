@@ -17,6 +17,7 @@ int ConvertDir(uint32_t input);
 void setBall(void);
 void showDir(void);
 void showSpeed(void);
+int BoundX; int BoundY; int BoundWidth; int BoundHeight;
 short run[360] = {5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5,
 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 
 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,
@@ -71,12 +72,11 @@ void setBall(void)
 	ST7735_DrawBitmap(getBallX(), getBallY(), ball,getBallWidth(),getBallHeight()); // set the ball to  the starting position. 
 }
 void MoveBall(void){
-	//calculate final position
-	
+	// make sure to return 1 if the collide results with hole to increase the levelnumber!
 	//int speed = getSpeed();
 	//int index = getDir();
-	int index = 19;
-	int speed = 7;
+	int index = 19;// tester
+	int speed = 7; // tester
 	int Rise = rise[index]; 
 	int Run = run[index]; 
 	speed *= 1; //that is the factor t for now
@@ -92,7 +92,15 @@ void MoveBall(void){
 		Delay100ms(1);
 	}
 }
-
+// need to have a setBound for the map in order to check in collide
+void setBounds (int LevelNumber)
+{
+	switch (LevelNumber)
+	{
+		case 1: BoundX = 0; BoundY = 0; BoundWidth = 9; BoundHeight=10;
+			//ST7735_drawRect(BoundX, BoundY, BoundWidth, BoundHeight);
+	}
+}
 		
 void showDir(void)
 {

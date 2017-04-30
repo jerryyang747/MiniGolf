@@ -44,7 +44,7 @@ void PortFInit(void);
 void DisableInterrupts(void); // Disable interrupts
 void EnableInterrupts(void);  // Enable interrupts
 void Delay100ms(uint32_t count); // time delay in 0.1 seconds
-
+int getStrokes(void);
 
 // *************************** Images ***************************
 // enemy ship that starts at the top of the screen (arms/mouth closed)
@@ -65,6 +65,7 @@ typedef  struct Object Tree;
 typedef  struct Object San;
 typedef  struct Object Hole;
 typedef  struct Object Wat;
+int Strokes; 
 Ball ball1; 
 Tree treeA;
 Tree treeB;
@@ -115,8 +116,8 @@ int displayStart(){
 	ST7735_SetCursor(4,8);
 	ST7735_OutString(" START GAME ");
 	ST7735_SetCursor(4,10);
-	ST7735_OutString(" LEVEL SELECT ");
-	ST7735_SetCursor(4,12);
+	//ST7735_OutString(" LEVEL SELECT ");
+	//ST7735_SetCursor(4,12);
 	ST7735_OutString(" HELP ");
 	int index = 0;
 	while(1){
@@ -133,7 +134,46 @@ int displayStart(){
 		if(index==3){index=0;}
 	}
 }
-
+void displayHelp(){
+	ST7735_SetCursor(0,0);
+	ST7735_OutString("HELP");
+	ST7735_SetCursor(0,2);
+	ST7735_OutString(" Left button- Swing");
+	ST7735_SetCursor(0,4);
+	ST7735_OutString(" Slide pot- Power");
+	ST7735_SetCursor(0,6);
+	ST7735_OutString(" Knob pot- Direction");
+	ST7735_SetCursor(0,8);
+	ST7735_OutString(" Top button- Options");
+	ST7735_SetCursor(0,10);
+	ST7735_OutString(" Bottom button- Exit");
+	
+	ST7735_SetCursor(0,13);
+	ST7735_OutString(" Press any button to\n go back.");
+	
+	while(!(PD0||PD1|PD2)){}
+}
+void startGame(){
+	int LevelNumber =1;
+	while(!(PD2)){// as long as PD1 or PD2 is not pressed (going back to the main menu)
+		//display level
+		setBounds(LevelNumber); // setboundaries for the level map
+		setBall(); // reset the ball to the original position
+		while(!PD0){ // while the "swing button is not pressed
+		showDir(); // show the magnitude and direction of the player's ball
+		}
+		Strokes++;
+		MoveBall(); // move ball in that certain position
+		
+		if(LevelNumber==3){
+			ST7735_SetCursor(4,2);
+			ST7735_OutString(" YOU WIN! ");
+			break;
+		}
+		
+	}
+	return;
+}
 
 
 // You can use this timer only if you learn how it works
@@ -211,3 +251,4 @@ void PortFInit(void)
 	GPIO_PORTF_AFSEL_R &=0x0;
 	GPIO_PORTF_DEN_R |=0x02;
 }
+int getStrokes(void){return Strokes;}
