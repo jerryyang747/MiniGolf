@@ -14,6 +14,7 @@
 #define TreeA 3
 #define TreeB 4
 void PortFInit(void);
+void ClearButtons(void);
 void DisableInterrupts(void); // Disable interrupts
 void EnableInterrupts(void);  // Enable interrupts
 void Delay100ms(uint32_t count); // time delay in 0.1 seconds
@@ -58,11 +59,12 @@ int main(void){
 	PortFInit();
 	EnableInterrupts();
 	GPIO_PORTF_DATA_R ^=0x02; //toggle heartbeat
-	
-	setBall();
-	showDir();
-	MoveBall();
-	
+	displayHelp();
+	ST7735_FillScreen(0x00000);
+	displayLevel();
+	displayData();
+	displayStart();
+	//IF YOU USE A BUTTON PRESS, CALL ClearButtons() TO CLEAR THEM!!!
 	/*
 	switch(displayStart()){
 		case 0: startGame();break;
@@ -80,6 +82,7 @@ int main(void){
 
 int startArray[3] = {8,10,12};
 int displayStart(){
+	ST7735_FillScreen(0x0000);
 	ST7735_SetCursor(4,2);
 	ST7735_OutString(" HOLE IN FUN ");
 	ST7735_SetCursor(4,3);
@@ -92,15 +95,15 @@ int displayStart(){
 	ST7735_OutString(" HELP ");
 	int index = 0;
 	while(1){
-		if(PD0){ flag = 0; return index;}
 		ST7735_SetCursor(3,startArray[index]);
 		ST7735_OutChar(0x3E);
-		Delay100ms(100);
+		Delay100ms(50);
 		ST7735_SetCursor(3,startArray[index]);
 		ST7735_OutChar(0x20);
-		Delay100ms(100);
-		if(PD1) {flag = 0; index--;} // change index based on button press
-		if(PD2) {flag = 0; index++;}
+		Delay100ms(50);
+		if(PD0) {ClearButtons(); return index;}
+		if(PD1) {ClearButtons(); index--;} // change index based on button press
+		if(PD2) {ClearButtons(); index++;}
 		if(index==-1){index=2;} // circular array
 		if(index==3){index=0;}
 	}
@@ -123,8 +126,8 @@ void displayHelp(){
 	ST7735_SetCursor(0,13);
 	ST7735_OutString(" Press any button to\n go back.");
 	
-	while(!(PD0||PD1|PD2)){}
-	flag=0;
+	while(!PD0 && !PD1 && !PD2){}
+	ClearButtons();
 }
 
 
@@ -223,5 +226,11 @@ void PortFInit(void)
 	GPIO_PORTF_DIR_R |=0x02; //PF2
 	GPIO_PORTF_AFSEL_R &=0x0;
 	GPIO_PORTF_DEN_R |=0x02;
+}
+void ClearButtons(){
+	flag =0;
+	PD0=0;
+	PD1=0;
+	PD2=0;
 }
 int getStrokes(void){return Strokes;}

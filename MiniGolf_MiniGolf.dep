@@ -15,25 +15,25 @@ F (.\Timer1.c)(0x590451B2)(-c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_se
 I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x51C88A34)
 I (Timer1.h)(0x5904520F)
 I (tm4c123gh6pm.h)(0x58FD9D38)
-F (.\Sound.c)(0x5906820C)(-c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\.. --C99-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary-Drvmdk -DPART_LM4F120H5QR-o .\sound.o --omf_browse .\sound.crf --depend .\sound.d)
+F (.\Sound.c)(0x5906E559)(-c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\.. --C99-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary-Drvmdk -DPART_LM4F120H5QR-o .\sound.o --omf_browse .\sound.crf --depend .\sound.d)
 I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x51C88A34)
 I (Sound.h)(0x590672EB)
 I (DAC.h)(0x5900578F)
 I (tm4c123gh6pm.h)(0x58FD9D38)
 F (.\LCD.s)(0x58E32BFF)(--cpu Cortex-M4 -g --apcs=interwork -I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary--list .\lcd.lst --xref -o .\lcd.o --depend .\lcd.d)
 F (.\Print.s)(0x58FD9D37)(--cpu Cortex-M4 -g --apcs=interwork -I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary--list .\print.lst --xref -o .\print.o --depend .\print.d)
-F (.\ST7735.c)(0x590659DB)(-c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\.. --C99-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary-Drvmdk -DPART_LM4F120H5QR-o .\st7735.o --omf_browse .\st7735.crf --depend .\st7735.d)
+F (.\ST7735.c)(0x5906E3DC)(-c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\.. --C99-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary-Drvmdk -DPART_LM4F120H5QR-o .\st7735.o --omf_browse .\st7735.crf --depend .\st7735.d)
 I (C:\Keil\ARM\ARMCC\include\stdio.h)(0x51C88A34)
 I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x51C88A34)
 I (ST7735.h)(0x58FD9D37)
 I (tm4c123gh6pm.h)(0x58FD9D38)
 F (.\tm4c123gh6pm.h)(0x58FD9D38)()
-F (.\EdgeInterrupt.c)(0x590233D1)(-c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\.. --C99-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary-Drvmdk -DPART_LM4F120H5QR-o .\edgeinterrupt.o --omf_browse .\edgeinterrupt.crf --depend .\edgeinterrupt.d)
+F (.\EdgeInterrupt.c)(0x5906ECED)(-c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\.. --C99-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary-Drvmdk -DPART_LM4F120H5QR-o .\edgeinterrupt.o --omf_browse .\edgeinterrupt.crf --depend .\edgeinterrupt.d)
 I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x51C88A34)
 I (tm4c123gh6pm.h)(0x58FD9D38)
 I (EdgeInterrupt.h)(0x590233D1)
 I (ST7735.h)(0x58FD9D37)
-F (.\MiniGolf.c)(0x5906736C)(-c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\.. --C99-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary-Drvmdk -DPART_LM4F120H5QR-o .\minigolf.o --omf_browse .\minigolf.crf --depend .\minigolf.d)
+F (.\MiniGolf.c)(0x5906F173)(-c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\.. --C99-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary-Drvmdk -DPART_LM4F120H5QR-o .\minigolf.o --omf_browse .\minigolf.crf --depend .\minigolf.d)
 I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x51C88A34)
 I (tm4c123gh6pm.h)(0x58FD9D38)
 I (ST7735.h)(0x58FD9D37)
@@ -43,8 +43,8 @@ I (Sound.h)(0x590672EB)
 I (ADC.h)(0x59040BA1)
 I (Sensor.h)(0x59040CA0)
 I (EdgeInterrupt.h)(0x590233D1)
-I (Physics.h)(0x5906735F)
-F (.\Physics.c)(0x5906735F)(-c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\.. --C99-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary-Drvmdk -DPART_LM4F120H5QR-o .\physics.o --omf_browse .\physics.crf --depend .\physics.d)
+I (Physics.h)(0x5906E0FD)
+F (.\Physics.c)(0x5906E8A5)(-c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\.. --C99-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary-Drvmdk -DPART_LM4F120H5QR-o .\physics.o --omf_browse .\physics.crf --depend .\physics.d)
 I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x51C88A34)
 I (MiniGolf.h)(0x59067211)
 I (ST7735.h)(0x58FD9D37)
