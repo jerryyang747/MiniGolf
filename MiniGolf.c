@@ -3,17 +3,21 @@
 #include "ST7735.h"
 #include "Random.h"
 #include "TExaS.h"
-#include "ADC.h"
 #include "Sound.h"
+#include "ADC.h"
 #include "Sensor.h"
 #include "EdgeInterrupt.h"
 #include "Physics.h"
 //#include "MiniGolf.h"
+#define Water 1
+#define Sand 2
+#define TreeA 3
+#define TreeB 4
 void PortFInit(void);
 void DisableInterrupts(void); // Disable interrupts
 void EnableInterrupts(void);  // Enable interrupts
 void Delay100ms(uint32_t count); // time delay in 0.1 seconds
-
+int getStrokes(void);
 
 // *************************** Images ***************************
 // enemy ship that starts at the top of the screen (arms/mouth closed)
@@ -28,10 +32,17 @@ int state=0;
 struct Object {int xPos; int yPos; uint16_t width; uint16_t height;};
 
 typedef struct Object Ball;
-typedef const struct Object Tree;
-typedef const struct Object Player;
-typedef const struct Object Hole;
+typedef struct Object Tree;
+typedef struct Object Player;
+typedef struct Object Hole;
+typedef struct Object sand;
+typedef struct Object water;
+int Strokes; 
 Ball ball1; 
+Tree treeA;
+Tree treeB;
+sand sand1;
+water water1;
 	
 int main(void){
 	// setting the original location of the ball should be done with Physics.c file to avoid redudancy (calibration)
@@ -48,7 +59,9 @@ int main(void){
 	EnableInterrupts();
 	GPIO_PORTF_DATA_R ^=0x02; //toggle heartbeat
 	
-	displayHelp();
+	setBall();
+	showDir();
+	MoveBall();
 	
 	/*
 	switch(displayStart()){
@@ -114,6 +127,28 @@ void displayHelp(){
 	flag=0;
 }
 
+
+void startGame(){
+	int LevelNumber =1;
+	while(!(PD2)){// as long as PD1 or PD2 is not pressed (going back to the main menu)
+		//display level
+		setBounds(LevelNumber); // setboundaries for the level map
+		setBall(); // reset the ball to the original position
+		while(!PD0){ // while the "swing button is not pressed
+		showDir(); // show the magnitude and direction of the player's ball
+		}
+		Strokes++;
+		MoveBall(); // move ball in that certain position
+		
+		if(LevelNumber==3){
+			ST7735_SetCursor(4,2);
+			ST7735_OutString(" YOU WIN! ");
+			break;
+		}
+		
+	}
+	return;
+}
 // You can use this timer only if you learn how it works
 
 void Delay100ms(uint32_t count){uint32_t volatile time;
@@ -136,6 +171,47 @@ void setBallWidth(int set){ball1.width = set;}
 void setBallHeight(int set){ball1.height=set;}
 void setBallX(int set){ball1.xPos=set;}
 void setBallY(int set){ball1.yPos=set;}
+int getXPos(int item) {
+	switch (item)
+	{
+		case Water: return water1.xPos;
+		case Sand: return sand1.xPos;
+		case TreeA: return treeA.xPos;
+		case TreeB: return treeB.xPos;
+	}
+	return 0;
+}
+int getYPos(int item)
+{
+	switch (item)
+	{
+		case Water: return water1.yPos;
+		case Sand: return sand1.yPos;
+		case TreeA: return treeA.yPos;
+		case TreeB: return treeB.yPos;
+	}
+	return 0;
+}
+void setXPos(int item, int x)
+{
+	switch (item)
+	{
+		case Water: water1.xPos = x; break;
+		case Sand: water1.xPos = x; break;
+		case TreeA: water1.xPos = x; break;
+		case TreeB: water1.xPos = x; break;
+	}
+}
+void setYPos(int item, int y)
+{
+	switch (item)
+	{
+		case Water: water1.xPos = y; break;
+		case Sand: water1.xPos = y; break;
+		case TreeA: water1.xPos = y; break;
+		case TreeB: water1.xPos = y; break;
+	}
+}
 void PortFInit(void)
 {
 	volatile unsigned int delay=0;
@@ -148,3 +224,4 @@ void PortFInit(void)
 	GPIO_PORTF_AFSEL_R &=0x0;
 	GPIO_PORTF_DEN_R |=0x02;
 }
+int getStrokes(void){return Strokes;}

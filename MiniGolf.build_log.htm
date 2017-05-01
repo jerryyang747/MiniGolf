@@ -20,15 +20,21 @@ assembling Print.s...
 compiling ST7735.c...
 compiling EdgeInterrupt.c...
 compiling MiniGolf.c...
-Physics.h(3): warning:  #1295-D: Deprecated declaration MoveBall - give arg types
-   void MoveBall();
-Physics.h(8): warning:  #1-D: last line of file ends without a newline
-   
-MiniGolf.c(150): warning:  #1-D: last line of file ends without a newline
-  }
-MiniGolf.c: 3 warnings, 0 errors
 compiling Physics.c...
-Physics.c(121): warning:  #1-D: last line of file ends without a newline
+compiling Sensor.c...
+linking...
+Program Size: Code=5512 RO-data=32792 RW-data=101628 ZI-data=1236  
+".\MiniGolf.axf" - 0 Error(s), 0 Warning(s).
+ompiling Sensor.c...
+linking...
+Program Size: Code=5268 RO-data=32792 RW-data=1572 ZI-data=1236  
+".\MiniGolf.axf" - 0 Error(s), 1 Warning(s).
+e level map
+MiniGolf.c(227): warning:  #1-D: last line of file ends without a newline
+  int getStrokes(void){return Strokes;}
+MiniGolf.c: 4 warnings, 0 errors
+compiling Physics.c...
+Physics.c(163): warning:  #1-D: last line of file ends without a newline
   }
 Physics.c: 1 warning, 0 errors
 compiling Sensor.c...
@@ -36,14 +42,15 @@ Sensor.c(19): warning:  #177-D: variable "distance" was declared but never refer
         int distance = 0;
 Sensor.c: 1 warning, 0 errors
 linking...
-Program Size: Code=5340 RO-data=2292 RW-data=116 ZI-data=1180  
-".\MiniGolf.axf" - 0 Error(s), 5 Warning(s).
-</pre>
-</body>
-</html>
-g\\OneDrive\\College\\Spring 2017\\EE 319K\\EE319Kware\\MiniGolf\\MiniGolf.axf" 
-Connecting: Mode=JTAG, Speed=1000000Hz
-Erase Done.
-Programming Done.
-Verify OK.
-
+Program Size: Code=5268 RO-data=32792 RW-data=1572 ZI-data=1236  
+".\MiniGolf.axf" - 0 Error(s), 6 Warning(s).
+ Code=5268 RO-data=32792 RW-data=1572 ZI-data=1236  
+".\MiniGolf.axf" - 0 Error(s), 7 Warning(s).
+Symbol InHole multiply defined (by minigolf.o and sound.o).
+.\MiniGolf.axf: Error: L6200E: Symbol WaterSplash multiply defined (by minigolf.o and sound.o).
+.\MiniGolf.axf: Error: L6200E: Symbol Sand multiply defined (by minigolf.o and sound.o).
+Not enough information to list image symbols.
+Not enough information to list the image map.
+Finished: 2 information, 0 warning and 5 error messages.
+".\MiniGolf.axf" - 5 Error(s), 6 Warning(s).
+Target not created

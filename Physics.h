@@ -1,8 +1,5 @@
-
- void setBall(void);
- void MoveBall();
- void displayLevel(void);
- void showSpeed(void);
- void showDir(void);
- void displayLevel(void);
- 
+void MoveBall(void);
+void setBall(void);
+void showDir(void);
+void showSpeed(void);
+void setBounds(int LeveNumber);
