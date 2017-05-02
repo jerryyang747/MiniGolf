@@ -55,6 +55,21 @@ void MoveBall(void){
 }
 	
 }
+int Collide()
+{
+	if((getBallX() >= 14 && getBallX() <=18)&& (getBallY()>=0 && getBallY()<= 5))// tester x and y for the hole since it is constant
+			return 7;
+	else if ((getBallX() >= getXPos(Water) && getBallX() <=getXPos(Water) + 15) && (getBallY()>=getYPos(Water) && getBallY()<= getYPos(Water) + 15)) // water
+	{return Water;}
+	else if ((getBallX() >= getXPos(Sand) && getBallX() <=getXPos(Sand) + 15) && (getBallY()>=getYPos(Sand) && getBallY()<= getYPos(Sand) + 15)) //sand
+	{return Sand;}
+	else if ((getBallX() >= getXPos(TreeA) && getBallX() <=getXPos(TreeA) + 15) && (getBallY()>=getYPos(TreeA) && getBallY()<= getYPos(TreeA) + 15)) // treeA
+	{return TreeA;}	
+		else if ((getBallX() >= getXPos(TreeB) && getBallX() <=getXPos(TreeB) + 15) && (getBallY()>=getYPos(TreeB) && getBallY()<= getYPos(TreeB) + 15)) //treeB
+	{return TreeB;}
+	
+		return 0;
+}
 
 void setBounds (int LevelNumber)
 {
@@ -101,15 +116,20 @@ void showDir()
 	ST7735_FillRect(xPos+poserx, yPos+posery, 2,2,0x000);}
 	Delay100ms(1);
 }
-
-void displayLevel(){
-	ST7735_DrawBitmap(0,160,lvl1,110,136);
+void displayData(int lvl);
+void displayLevel( int level){
+	ST7735_FillScreen(0);
+	
+	ST7735_DrawBitmap(0,160,game[level-1].image,110,136);
 	ST7735_DrawBitmap(15,150,ball,7,7);
-	ST7735_DrawBitmap(30,80,tree,12,12);
-	ST7735_DrawBitmap(70,50,Hole, 7,14);
+	ST7735_DrawBitmap(game[level-1].xTree1,game[level-1].yTree1,tree,12,12);
+	ST7735_DrawBitmap(game[level-1].xTree2,game[level-1].yTree2,tree,12,12);
+	ST7735_DrawBitmap(game[level-1].xHole,game[level-1].yHole,Hole, 7,14);
+
+	displayData(level);
 }
 
-void displayData(){
+void displayData(int lvl){
 	ST7735_SetCursor(0,0);
 	ST7735_OutString("STROKES: ");
 	ST7735_SetCursor(9,0);
@@ -117,12 +137,12 @@ void displayData(){
 	
 	ST7735_SetCursor(14,0);
 	ST7735_OutString("HOLE: ");
-	LCD_OutDec(level);
+	LCD_OutDec(game[level-1].lvlNum);
 	
 	ST7735_SetCursor(0,1);
 	ST7735_OutString("PAR: ");
 	ST7735_SetCursor(5,1);
-	ST7735_OutChar(0x34);
+	ST7735_OutChar(game[level-1].par);
 	
 	ST7735_SetCursor(14,14);
 	ST7735_OutString("OPTIONS");

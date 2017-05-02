@@ -59,10 +59,10 @@ int main(void){
 	PortFInit();
 	EnableInterrupts();
 	GPIO_PORTF_DATA_R ^=0x02; //toggle heartbeat
-	displayHelp();
-	ST7735_FillScreen(0x00000);
-	displayLevel();
-	displayData();
+	//displayHelp();
+	//ST7735_FillScreen(0x00000);
+	displayLevel(1);
+	displayLevel(2);
 	displayStart();
 	//IF YOU USE A BUTTON PRESS, CALL ClearButtons() TO CLEAR THEM!!!
 	/*
