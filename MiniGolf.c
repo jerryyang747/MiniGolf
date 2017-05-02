@@ -163,8 +163,9 @@ void startGame(){
 		showDir(); // show the magnitude and direction of the player's ball
 		}
 		Strokes++;
-		MoveBall(); // move ball in that certain position
-		
+		volatile int check = MoveBall(); // move ball in that certain position
+		if(check ==7)
+			LevelNumber++;
 		if(LevelNumber==3){
 			ST7735_SetCursor(4,2);
 			ST7735_OutString(" YOU WIN! ");

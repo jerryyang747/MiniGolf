@@ -18,6 +18,7 @@ void setBall(void);
 void showDir(void);
 void showSpeed(void);
 int BoundX; int BoundY; int BoundWidth; int BoundHeight;
+int Collide(void);
 short run[360] = {5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5,
 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 
 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,
@@ -71,7 +72,7 @@ void setBall(void)
 	setBallHeight(16);
 	ST7735_DrawBitmap(getBallX(), getBallY(), ball,getBallWidth(),getBallHeight()); // set the ball to  the starting position. 
 }
-void MoveBall(void){
+int MoveBall(void){
 	// make sure to return 1 if the collide results with hole to increase the levelnumber!
 	//int speed = getSpeed();
 	//int index = getDir();
@@ -90,7 +91,34 @@ void MoveBall(void){
 		bally += Rise;
 		ST7735_DrawBitmap(getBallX()+ballx, getBallY()-bally, ball,getBallWidth(),getBallHeight());
 		Delay100ms(1);
+		volatile int check = Collide();
+		switch(check)
+		{
+			case 0: continue;
+			case Water: return Water; 
+			case Sand: speed--; return Sand; 
+			case 7: return 1; 
+			case TreeA: index+=180;  //fix this for out of bounds
+			case TreeB: index+=190;  //fix this for index out of bounds
+			
+		}
 	}
+	return 0;
+}
+int Collide()
+{
+	if((getBallX() >= 14 && getBallX() <=18)&& (getBallY()>=0 && getBallY()<= 5))// tester x and y for the hole since it is constant
+			return 7;
+	else if ((getBallX() >= getXPos(Water) && getBallX() <=getXPos(Water) + 15) && (getBallY()>=getYPos(Water) && getBallY()<= getYPos(Water) + 15)) // water
+	{return Water;}
+	else if ((getBallX() >= getXPos(Sand) && getBallX() <=getXPos(Sand) + 15) && (getBallY()>=getYPos(Sand) && getBallY()<= getYPos(Sand) + 15)) //sand
+	{return Sand;}
+	else if ((getBallX() >= getXPos(TreeA) && getBallX() <=getXPos(TreeA) + 15) && (getBallY()>=getYPos(TreeA) && getBallY()<= getYPos(TreeA) + 15)) // treeA
+	{return TreeA;}	
+		else if ((getBallX() >= getXPos(TreeB) && getBallX() <=getXPos(TreeB) + 15) && (getBallY()>=getYPos(TreeB) && getBallY()<= getYPos(TreeB) + 15)) //treeB
+	{return TreeB;}
+	
+		return 0;
 }
 // need to have a setBound for the map in order to check in collide
 void setBounds (int LevelNumber)
