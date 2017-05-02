@@ -137,12 +137,12 @@ void displayData(int lvl){
 	
 	ST7735_SetCursor(14,0);
 	ST7735_OutString("HOLE: ");
-	LCD_OutDec(game[level-1].lvlNum);
+	LCD_OutDec(game[lvl-1].lvlNum);
 	
 	ST7735_SetCursor(0,1);
 	ST7735_OutString("PAR: ");
 	ST7735_SetCursor(5,1);
-	ST7735_OutChar(game[level-1].par);
+	ST7735_OutChar(0x30+game[lvl-1].par);
 	
 	ST7735_SetCursor(14,14);
 	ST7735_OutString("OPTIONS");

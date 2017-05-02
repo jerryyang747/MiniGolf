@@ -1930,6 +1930,7 @@ const unsigned short lvl1[] = {
 struct Level{int lvlNum; const unsigned short *image; int par; int xTree1; int yTree1; int xTree2; int yTree2; int xHole; int yHole;};
 typedef const struct Level gameLevel;
 gameLevel game[2] = {
-	{1,lvl1,4,30,90,30,100,70,50},
-	{2,lvl2,3,30,85,60,85,70,50}
+	{1,lvl2,3,30,85,60,85,50,50},
+	{2,lvl1,4,30,90,30,100,70,50},
+	
 }; //Holes
