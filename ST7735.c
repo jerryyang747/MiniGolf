@@ -1149,10 +1149,10 @@ void ST7735_OutUDec(uint32_t n){
   Message[Messageindex] = 0; // terminate
   ST7735_DrawString(StX,StY,Message,StTextColor);
   StX = StX+Messageindex;
-  if(StX>20){
+  /*if(StX>20){
     StX = 20;
     ST7735_DrawCharS(StX*6,StY*10,'*',ST7735_RED,ST7735_BLACK, 1);
-  }
+  }*/
 }
 
 
@@ -1492,10 +1492,10 @@ void ST7735_OutChar(char ch){
   }
   ST7735_DrawCharS(StX*6,StY*10,ch,ST7735_YELLOW,ST7735_BLACK, 1);
   StX++;
-  if(StX>20){
+ /* if(StX>20){
     StX = 20;
     ST7735_DrawCharS(StX*6,StY*10,'*',ST7735_RED,ST7735_BLACK, 1);
-  }
+  }*/
   return;
 }
 //********ST7735_OutString*****************
@@ -1544,7 +1544,7 @@ int ferror(FILE *f){
 // Outputs: none
 void Output_Init(void){
   ST7735_InitR(INITR_REDTAB);
-  ST7735_FillScreen(0);                 // set screen to black
+  ST7735_FillScreen(0x0000);                 // set screen to black
 }
 
 // Clear display

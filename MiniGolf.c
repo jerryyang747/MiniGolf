@@ -1,37 +1,10 @@
-
-// Jonathan Valvano's "Spacce Invader" used as Template to create MiniGolf
-//Created by Aditya Tyagi and Jerry Yang, EE319K Spring 2017, Telang
-// ******* Possible Hardware I/O connections*******************
-// Slide pot pin 1 connected to ground
-// Slide pot pin 2 connected to PE2/AIN1
-// Slide pot pin 3 connected to +3.3V 
-// fire button connected to PE0
-// special weapon fire button connected to PE1
-// 8*R resistor DAC bit 0 on PB0 (least significant bit)
-// 4*R resistor DAC bit 1 on PB1
-// 2*R resistor DAC bit 2 on PB2
-// 1*R resistor DAC bit 3 on PB3 (most significant bit)
-// LED on PB4
-// LED on PB5
-
-// Backlight (pin 10) connected to +3.3 V
-// MISO (pin 9) unconnected
-// SCK (pin 8) connected to PA2 (SSI0Clk)
-// MOSI (pin 7) connected to PA5 (SSI0Tx)
-// TFT_CS (pin 6) connected to PA3 (SSI0Fss)
-// CARD_CS (pin 5) unconnected
-// Data/Command (pin 4) connected to PA6 (GPIO), high for data, low for command
-// RESET (pin 3) connected to PA7 (GPIO)
-// VCC (pin 2) connected to +3.3 V
-// Gnd (pin 1) connected to ground
-
 #include <stdint.h>
 #include "tm4c123gh6pm.h"
 #include "ST7735.h"
 #include "Random.h"
 #include "TExaS.h"
-#include "ADC.h"
 #include "Sound.h"
+#include "ADC.h"
 #include "Sensor.h"
 #include "EdgeInterrupt.h"
 #include "Physics.h"
@@ -41,6 +14,7 @@
 #define TreeA 3
 #define TreeB 4
 void PortFInit(void);
+void ClearButtons(void);
 void DisableInterrupts(void); // Disable interrupts
 void EnableInterrupts(void);  // Enable interrupts
 void Delay100ms(uint32_t count); // time delay in 0.1 seconds
@@ -57,49 +31,48 @@ int getBallWidth(void); int getBallHeight(void); int getBallX(void); int getBall
 void setBallWidth(int set); void setBallHeight(int set); void setBallX(int set); void setBallY(int set);
 int state=0;
 struct Object {int xPos; int yPos; uint16_t width; uint16_t height;};
-int getXPos(int item);int getYPos(int item);
-void setXPos(int item, int x); void setYPos(int item, int y);
 
 typedef struct Object Ball;
-typedef  struct Object Tree;
-typedef  struct Object San;
-typedef  struct Object Hole;
-typedef  struct Object Wat;
+typedef struct Object Tree;
+typedef struct Object Player;
+typedef struct Object Hole;
+typedef struct Object sand;
+typedef struct Object water;
 int Strokes; 
 Ball ball1; 
 Tree treeA;
 Tree treeB;
-San sand;
-Wat water;
+sand sand1;
+water water1;
+	
 int main(void){
 	// setting the original location of the ball should be done with Physics.c file to avoid redudancy (calibration)
 	DisableInterrupts();
   TExaS_Init();  // set system clock to 80 MHz
+		ADC_Init();
   Random_Init(1);
-	//ST7735_InitR(INITR_REDTAB);
   Output_Init();
-	ADC_Init();
+
 	Sound_Init();
 	Buttons_Init();
 	Sensor_Init();
 	PortFInit();
 	EnableInterrupts();
-	ST7735_FillScreen(0x0000); 
-//	ST7735_OutString("Initialized"); 
 	GPIO_PORTF_DATA_R ^=0x02; //toggle heartbeat
-  ST7735_FillScreen(0x07E0);            // set screen to green
-	setBall(); // set the Ball to the original position.
-	//MoveBall();
-	showDir();
-	MoveBall();
+	//displayHelp();
+	//ST7735_FillScreen(0x00000);
+	displayLevel(1);
+	displayLevel(2);
+	displayStart();
+	//IF YOU USE A BUTTON PRESS, CALL ClearButtons() TO CLEAR THEM!!!
 	/*
 	switch(displayStart()){
 		case 0: startGame();break;
 		case 1: selectLevel();break;
 		case 2: displayHelp(); break;//Start Screen
 	}
-	if(help ==1) displayStart
-	*/
+	if(help ==1) displayStart();*/
+	
 	
 	//ST7735_DrawBitmap(ball1.xPos, ball1.yPos, ball1.image, ball1.width, ball1.height);
 	//ST7735_DrawBitmap(64, 149, ball[], Ball.width,Ball.height);
@@ -109,6 +82,7 @@ int main(void){
 
 int startArray[3] = {8,10,12};
 int displayStart(){
+	ST7735_FillScreen(0x0000);
 	ST7735_SetCursor(4,2);
 	ST7735_OutString(" HOLE IN FUN ");
 	ST7735_SetCursor(4,3);
@@ -116,24 +90,25 @@ int displayStart(){
 	ST7735_SetCursor(4,8);
 	ST7735_OutString(" START GAME ");
 	ST7735_SetCursor(4,10);
-	//ST7735_OutString(" LEVEL SELECT ");
-	//ST7735_SetCursor(4,12);
+	ST7735_OutString(" LEVEL SELECT ");
+	ST7735_SetCursor(4,12);
 	ST7735_OutString(" HELP ");
 	int index = 0;
 	while(1){
-		if(PD0){ flag = 0; return index;}
 		ST7735_SetCursor(3,startArray[index]);
 		ST7735_OutChar(0x3E);
-		Delay100ms(1);
+		Delay100ms(50);
 		ST7735_SetCursor(3,startArray[index]);
 		ST7735_OutChar(0x20);
-		Delay100ms(1);
-		if(PD1) {flag = 0; index--;} // change index based on button press
-		if(PD2) {flag = 0; index++;}
+		Delay100ms(50);
+		if(PD0) {ClearButtons(); return index;}
+		if(PD1) {ClearButtons(); index--;} // change index based on button press
+		if(PD2) {ClearButtons(); index++;}
 		if(index==-1){index=2;} // circular array
 		if(index==3){index=0;}
 	}
 }
+
 void displayHelp(){
 	ST7735_SetCursor(0,0);
 	ST7735_OutString("HELP");
@@ -151,8 +126,11 @@ void displayHelp(){
 	ST7735_SetCursor(0,13);
 	ST7735_OutString(" Press any button to\n go back.");
 	
-	while(!(PD0||PD1|PD2)){}
+	while(!PD0 && !PD1 && !PD2){}
+	ClearButtons();
 }
+
+
 void startGame(){
 	int LevelNumber =1;
 	while(!(PD2)){// as long as PD1 or PD2 is not pressed (going back to the main menu)
@@ -163,7 +141,8 @@ void startGame(){
 		showDir(); // show the magnitude and direction of the player's ball
 		}
 		Strokes++;
-		volatile int check = MoveBall(); // move ball in that certain position
+		// move ball in that certain position
+		volatile int check = MoveBall(LevelNumber); // move ball in that certain position
 		if(check ==7)
 			LevelNumber++;
 		if(LevelNumber==3){
@@ -175,8 +154,6 @@ void startGame(){
 	}
 	return;
 }
-
-
 // You can use this timer only if you learn how it works
 
 void Delay100ms(uint32_t count){uint32_t volatile time;
@@ -202,8 +179,8 @@ void setBallY(int set){ball1.yPos=set;}
 int getXPos(int item) {
 	switch (item)
 	{
-		case Water: return water.xPos;
-		case Sand: return sand.xPos;
+		case Water: return water1.xPos;
+		case Sand: return sand1.xPos;
 		case TreeA: return treeA.xPos;
 		case TreeB: return treeB.xPos;
 	}
@@ -213,8 +190,8 @@ int getYPos(int item)
 {
 	switch (item)
 	{
-		case Water: return water.yPos;
-		case Sand: return sand.yPos;
+		case Water: return water1.yPos;
+		case Sand: return sand1.yPos;
 		case TreeA: return treeA.yPos;
 		case TreeB: return treeB.yPos;
 	}
@@ -224,20 +201,20 @@ void setXPos(int item, int x)
 {
 	switch (item)
 	{
-		case Water: water.xPos = x; break;
-		case Sand: water.xPos = x; break;
-		case TreeA: water.xPos = x; break;
-		case TreeB: water.xPos = x; break;
+		case Water: water1.xPos = x; break;
+		case Sand: water1.xPos = x; break;
+		case TreeA: water1.xPos = x; break;
+		case TreeB: water1.xPos = x; break;
 	}
 }
 void setYPos(int item, int y)
 {
 	switch (item)
 	{
-		case Water: water.xPos = y; break;
-		case Sand: water.xPos = y; break;
-		case TreeA: water.xPos = y; break;
-		case TreeB: water.xPos = y; break;
+		case Water: water1.xPos = y; break;
+		case Sand: water1.xPos = y; break;
+		case TreeA: water1.xPos = y; break;
+		case TreeB: water1.xPos = y; break;
 	}
 }
 void PortFInit(void)
@@ -251,5 +228,11 @@ void PortFInit(void)
 	GPIO_PORTF_DIR_R |=0x02; //PF2
 	GPIO_PORTF_AFSEL_R &=0x0;
 	GPIO_PORTF_DEN_R |=0x02;
+}
+void ClearButtons(){
+	flag =0;
+	PD0=0;
+	PD1=0;
+	PD2=0;
 }
 int getStrokes(void){return Strokes;}

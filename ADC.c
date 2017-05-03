@@ -13,19 +13,26 @@ void PE_Init(void);
 // Input: none
 // Output: none
 void ADC_Init(void){ volatile unsigned long delay = 0;
-	PE_Init();
-	SYSCTL_RCGCADC_R |= 0x03; 	//Activate ADC0, SYSCTL_RCGCADC_R
-	delay++; delay++; 	delay++; delay++;delay++; delay++;						//Delay to stabilize
-	ADC1_PC_R =0x01;								//configure for 125K, SYSCTL_RCGCADC_R
-	ADC1_ACTSS_R &= ~0x0008;        //disable sample sequencer 3
-	//ADC1_SAC_R = 6;									//Slow down fluctuations
-  ADC1_SSPRI_R = 0x0123;          //Sequencer 3 is highest priority
-  ADC1_EMUX_R &= ~0xF000;         //seq3 is software trigger
-  ADC1_SSMUX2_R &= ~0x000F;       //clear SS3 field
-  ADC1_SSMUX2_R += 1;             //set channel Ain1 (PE2)
-  ADC1_SSCTL2_R = 0x0006;         //set ADC modes
-	ADC1_IM_R &= ~0x8;
-  ADC1_ACTSS_R |= 0x0008;         //enable sample sequencer 3
+	//PE_Init();
+  SYSCTL_RCGCADC_R |= 0x00000001; // 1) activate ADC0
+  SYSCTL_RCGCGPIO_R |= SYSCTL_RCGCGPIO_R4; // 1) activate clock for Port E
+  delay = SYSCTL_RCGCGPIO_R;      // 2) allow time for clock to stabilize
+  delay = SYSCTL_RCGCGPIO_R;
+  GPIO_PORTE_DIR_R &= ~0x30;      // 3) make PE4 PE5 input
+  GPIO_PORTE_AFSEL_R |= 0x30;     // 4) enable alternate function on PE4 PE5
+  GPIO_PORTE_DEN_R &= ~0x30;      // 5) disable digital I/O on PE4 PE5
+                                  // 5a) configure PE4 as ?? (skip this line because PCTL is for digital only)
+  GPIO_PORTE_PCTL_R = GPIO_PORTE_PCTL_R&0xFF00FFFF;
+  GPIO_PORTE_AMSEL_R |= 0x30;     // 6) enable analog functionality on PE4 PE5
+  ADC1_PC_R &= ~0xF;              // 8) clear max sample rate field
+  ADC1_PC_R |= 0x1;               //    configure for 125K samples/sec
+  ADC1_SSPRI_R = 0x3210;          // 9) Sequencer 3 is lowest priority
+  ADC1_ACTSS_R &= ~0x0004;        // 10) disable sample sequencer 2
+  ADC1_EMUX_R &= ~0x0F00;         // 11) seq2 is software trigger
+  ADC1_SSMUX2_R = 0x0089;         // 12) set channels for SS2
+  ADC1_SSCTL2_R = 0x0060;         // 13) no TS0 D0 IE0 END0 TS1 D1, yes IE1 END1
+  ADC1_IM_R &= ~0x0004;           // 14) disable SS2 interrupts
+  ADC1_ACTSS_R |= 0x0004;         // 15) enable sample sequencer 2
 	
 }
 
@@ -33,12 +40,12 @@ void ADC_Init(void){ volatile unsigned long delay = 0;
 // Busy-wait Analog to digital conversion
 // Input: none
 // Output: 12-bit result of ADC conversion
-uint32_t ADC_In(void){  uint32_t result;
-  ADC0_PSSI_R = 0x08;           		// 1) initiate SS3
-	result++; result--;result++; result--;
-  while((ADC0_RIS_R&0x08)==0){};   // 2) wait for conversion done
-  result = ADC0_SSFIFO3_R&0xFFF;   // 3) read result
-  ADC0_ISC_R = 0x0008;             // 4) acknowledge completion
+int ADC_In(void){  uint32_t result;
+  ADC1_PSSI_R = 0x04;           		// 1) initiate SS3
+  while((ADC1_RIS_R&0x04)==0){};   // 2) wait for conversion done
+  result = ADC1_SSFIFO2_R&0xFFF;   // 3) read result
+	result = ADC1_SSFIFO2_R&0xFFF;
+  ADC1_ISC_R = 0x004;             // 4) acknowledge completion
   return result;
 }
 

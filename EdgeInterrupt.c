@@ -68,8 +68,7 @@ void Buttons_Init(void){
 
 void GPIOPortD_Handler(void){
 	if (flag==1) return; //check bounce flag
-  GPIO_PORTD_ICR_R |= 0x07;      // acknowledge flag4
-	int buttons = GPIO_PORTD_DATA_R&0x00000007; // get button data
+	int buttons = GPIO_PORTD_RIS_R&0x00000007; // get button data
 	
 	//Do something based on button press
 	switch(buttons){
@@ -83,5 +82,6 @@ void GPIOPortD_Handler(void){
 		case 7: PD0=1;PD2=1;PD1=1;break;
 	}
 	flag = 1;
+	GPIO_PORTD_ICR_R |= 0x07;      // acknowledge flag4, RIS cleared by ICR
 }
 

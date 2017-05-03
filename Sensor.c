@@ -16,7 +16,6 @@ void Sensor_Init(){
 	
 }
 int getDistance(){ 
-	int distance = 0;
 	int time = 0;
 	//Send signal on TRIG (PE0)
 	GPIO_PORTE_DATA_R |= 0x1;
